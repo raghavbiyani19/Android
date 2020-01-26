@@ -1,0 +1,68 @@
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rg">
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bat"
+        android:id="@+id/bat"
+        android:onClick="selection"/>
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ball"
+        android:id="@+id/ball"
+        android:onClick="selection"/>
+
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Answer: "
+        android:id="@+id/answer"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:id="@+id/submit"/>
+
+------------------------------------------------------------------------------------
+
+public class Main2Activity extends AppCompatActivity {
+
+    RadioGroup rg;
+    RadioButton radio;
+    TextView answer;
+    Button submit;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        
+
+        submit = (Button) findViewById(R.id.submit);
+        answer = (TextView) findViewById(R.id.answer);
+        rg = (RadioGroup) findViewById(R.id.rg);
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                answer.setText("Answer: "+ radio.getText());
+            }
+        });
+
+    }
+
+    public void selection(View view){
+        int radioId = rg.getCheckedRadioButtonId();
+
+        radio = findViewById(radioId);
+        Toast.makeText(this, "SELECTED: "+ radio.getText(), Toast.LENGTH_SHORT).show();
+
+    }
+}

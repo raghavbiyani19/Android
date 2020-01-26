@@ -1,0 +1,295 @@
+CUSTOM LAYOUT:
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+ 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cb"
+        android:text="Checkbox"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/animal"
+        android:layout_marginLeft="20dp"
+        android:textSize="20sp"
+        android:text="animal"/>
+ 
+</LinearLayout>
+
+---------------------------------------------------------------------- 
+
+MAIN XML:
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.zerones_hardik.listview_with_checkbox_demonuts.MainActivity">
+ 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/lv">
+ 
+    </ListView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+ 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/select"
+            android:text="Select all"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/deselect"
+            android:text="Deselct all"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/next"
+            android:text="Next activity"/>
+ 
+ 
+    </LinearLayout>
+ 
+</LinearLayout>
+
+-------------------------------------------------------------------------------------------
+CLASS CUSTOM ADAPTER:
+
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.TextView;
+import android.widget.Toast;
+ 
+import java.util.ArrayList;
+ 
+/**
+ * Created by hardik on 9/1/17.
+ */
+public class CustomAdapter  extends BaseAdapter {
+ 
+    private Context context;
+    public static ArrayList<Model> modelArrayList;
+ 
+ 
+    public CustomAdapter(Context context, ArrayList<Model> modelArrayList) {
+ 
+        this.context = context;
+        this.modelArrayList = modelArrayList;
+ 
+    }
+ 
+    @Override
+    public int getViewTypeCount() {
+        return getCount();
+    }
+    @Override
+    public int getItemViewType(int position) {
+ 
+        return position;
+    }
+ 
+    @Override
+    public int getCount() {
+        return modelArrayList.size();
+    }
+ 
+    @Override
+    public Object getItem(int position) {
+        return modelArrayList.get(position);
+    }
+ 
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+ 
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        final ViewHolder holder;
+ 
+        if (convertView == null) {
+            holder = new ViewHolder(); LayoutInflater inflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.lv_item, null, true);
+ 
+            holder.checkBox = (CheckBox) convertView.findViewById(R.id.cb);
+            holder.tvAnimal = (TextView) convertView.findViewById(R.id.animal);
+ 
+            convertView.setTag(holder);
+        }else {
+            // the getTag returns the viewHolder object set as a tag to the view
+            holder = (ViewHolder)convertView.getTag();
+        }
+ 
+ 
+        holder.checkBox.setText("Checkbox "+position);
+        holder.tvAnimal.setText(modelArrayList.get(position).getAnimal());
+ 
+        holder.checkBox.setChecked(modelArrayList.get(position).getSelected());
+ 
+        holder.checkBox.setTag(R.integer.btnplusview, convertView);
+        holder.checkBox.setTag( position);
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+ 
+                View tempview = (View) holder.checkBox.getTag(R.integer.btnplusview);
+                TextView tv = (TextView) tempview.findViewById(R.id.animal); 
+                Integer pos = (Integer)  holder.checkBox.getTag();
+                Toast.makeText(context, "Checkbox "+pos+" clicked!", Toast.LENGTH_SHORT).show();
+ 
+                if(modelArrayList.get(pos).getSelected()){
+                    modelArrayList.get(pos).setSelected(false);
+                }else {
+                    modelArrayList.get(pos).setSelected(true);
+                }
+ 
+            }
+        });
+ 
+        return convertView;
+    }
+ 
+    private class ViewHolder {
+ 
+        protected CheckBox checkBox;
+        private TextView tvAnimal;
+ 
+    }
+}
+
+----------------------------------------------------------------------------
+MAIN ACTIVITY JAVA:
+
+
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ListView;
+ 
+import java.util.ArrayList;
+ 
+public class MainActivity extends AppCompatActivity {
+ 
+    private ListView lv;
+    private ArrayList<Model> modelArrayList;
+    private CustomAdapter customAdapter;
+    private Button btnselect, btndeselect, btnnext;
+    private  String[] animallist = new String[]{"Lion", "Tiger", "Leopard", "Cat"};
+ 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+ 
+        lv = (ListView) findViewById(R.id.lv);
+        btnselect = (Button) findViewById(R.id.select);
+        btndeselect = (Button) findViewById(R.id.deselect);
+        btnnext = (Button) findViewById(R.id.next);
+ 
+        modelArrayList = getModel(false);
+        customAdapter = new CustomAdapter(this,modelArrayList);
+        lv.setAdapter(customAdapter);
+ 
+        btnselect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                modelArrayList = getModel(true);
+                customAdapter = new CustomAdapter(MainActivity.this,modelArrayList);
+                lv.setAdapter(customAdapter);
+            }
+        });
+        btndeselect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                modelArrayList = getModel(false);
+                customAdapter = new CustomAdapter(MainActivity.this,modelArrayList);
+                lv.setAdapter(customAdapter);
+            }
+        });
+        btnnext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,NextActivity.class);
+                startActivity(intent);
+            }
+        });
+ 
+ 
+    }
+ 
+    private ArrayList<Model> getModel(boolean isSelect){
+        ArrayList<Model> list = new ArrayList<>();
+        for(int i = 0; i < 4; i++){
+ 
+            Model model = new Model();
+            model.setSelected(isSelect);
+            model.setAnimal(animallist[i]);
+            list.add(model);
+        }
+        return list;
+    }
+}
+----------------------------------------------------------------------------
+NEXT ACTIVITY JAVA:
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
+ 
+public class NextActivity extends AppCompatActivity {
+ 
+    private TextView tv;
+ 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_next);
+ 
+        tv = (TextView) findViewById(R.id.tv);
+ 
+        for (int i = 0; i < CustomAdapter.modelArrayList.size(); i++){
+            if(CustomAdapter.modelArrayList.get(i).getSelected()) {
+                tv.setText(tv.getText() + " " + CustomAdapter.modelArrayList.get(i).getAnimal());
+            }
+        }
+    }
+}
+
+-----------------------------------------------------------------------------------
+ACTIVITY MAIN XML:
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   tools:context="com.example.zerones_hardik.listview_with_checkbox_demonuts.NextActivity">
+ 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:id="@+id/tv"/>
+ 
+</RelativeLayout>

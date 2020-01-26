@@ -1,0 +1,42 @@
+CAMERA:
+public static final int CAMERA_PIC_REQUEST = 1;//firstly define this 
+
+
+
+Intent photo= new Intent("android.media.action.IMAGE_CAPTURE");
+                    startActivityForResult(photo, CAMERA_PIC_REQUEST);
+
+******************************************************************************
+CONTACTS:
+static final int REQUEST_SELECT_CONTACT = 1;
+
+public void selectContact() {
+    Intent intent = new Intent(Intent.ACTION_PICK);
+    intent.setType(ContactsContract.Contacts.CONTENT_TYPE);
+    if (intent.resolveActivity(getPackageManager()) != null) {
+        startActivityForResult(intent, REQUEST_SELECT_CONTACT);
+    }
+}
+
+*********************************************************************************
+CALL:
+public void dialPhoneNumber(String phoneNumber) {
+    Intent intent = new Intent(Intent.ACTION_DIAL);
+    intent.setData(Uri.parse("tel:" + phoneNumber));
+    if (intent.resolveActivity(getPackageManager()) != null) {
+        startActivity(intent);
+    }
+}
+*********************************************************************************
+CALENDAR:
+public void addEvent(String title, String location, long begin, long end) {
+    Intent intent = new Intent(Intent.ACTION_INSERT)
+            .setData(Events.CONTENT_URI)
+            .putExtra(Events.TITLE, title)
+            .putExtra(Events.EVENT_LOCATION, location)
+            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, begin)
+            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, end);
+    if (intent.resolveActivity(getPackageManager()) != null) {
+        startActivity(intent);
+    }
+}

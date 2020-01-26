@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:gravity="center">
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:id="@+id/edittext1"
+        android:hint="NUMBER 1"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:id="@+id/edittext2"
+        android:hint="NUMBER 2"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textviewanswer"
+        android:text="RESULT"
+        android:textSize="30sp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SUBMIT"
+        android:id="@+id/submit" />
+
+    </LinearLayout>
+
+
+-----------------------------------------------------------------------------------------
+
+
+package com.example.mytimepass;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity {
+
+    private TextView textviewanswer;
+    private EditText edittext1,edittext2;
+    private Button submit;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        textviewanswer = (TextView) findViewById(R.id.textviewanswer);
+        edittext1 = (EditText) findViewById(R.id.edittext1);
+        edittext2 = (EditText) findViewById(R.id.edittext2);
+        submit = (Button) findViewById(R.id.submit);
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int number1 = Integer.parseInt(edittext1.getText().toString());
+                int number2 = Integer.parseInt(edittext2.getText().toString());
+                Intent intent = new Intent(MainActivity.this,Main2Activity.class);
+                intent.putExtra("number1",number1);
+                intent.putExtra("number2",number2);
+                startActivityForResult(intent,18);
+            }
+        });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 18){
+            if(resultCode==RESULT_OK){
+                int result = data.getIntExtra("result",0);
+                textviewanswer.setText(""+result);
+            }
+            if(resultCode == RESULT_CANCELED){
+                textviewanswer.setText("NOTHING SELECTED");
+            }
+        }
+    }
+}
+
+
+------------------------------------------------------------------------------------------
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Main2Activity"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textview"
+        android:text="NUMBERS: "/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/add"
+        android:text="ADD"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/minus"
+        android:text="MINUS"/>
+
+
+</LinearLayout>
+
+
+-----------------------------------------------------------------------------------
+
+
+
+package com.example.mytimepass;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+public class Main2Activity extends AppCompatActivity {
+
+    TextView textview;
+    Button add,minus;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main2);
+
+        Intent intent = getIntent();
+        final int number1 = intent.getIntExtra("number1",0);
+        final int number2 = intent.getIntExtra("number2",0);
+
+        textview = (TextView) findViewById(R.id.textview);
+        add = (Button) findViewById(R.id.add);
+        minus = (Button) findViewById(R.id.minus);
+
+        textview.setText("Numbers: "+number1+ ", "+ number2);
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int result = number1 + number2;
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("result",result);
+                setResult(RESULT_OK,resultIntent);
+                finish();
+            }
+        });
+
+        minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int result = number1 - number2;
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("result",result);
+                setResult(RESULT_OK,resultIntent);
+                finish();
+            }
+        });
+
+    }
+}
+
+
+----------------------------------------------------------------------------------

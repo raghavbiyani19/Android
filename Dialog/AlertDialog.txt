@@ -1,0 +1,46 @@
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textview"
+        android:text="NAME:"
+        android:textSize="28sp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SHOW"
+        android:id="@+id/button"/>
+
+-------------------------------------------------------------------------------
+
+
+public class MainActivity extends AppCompatActivity {
+
+    private TextView textview;
+    private Button button;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        textview = (TextView) findViewById(R.id.textview);
+        button = (Button) findViewById(R.id.button);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setMessage("Are you Sure?").setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        textview.setText("RAGHAV");
+                    }
+                }).setNegativeButton("NO", null);
+
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        });
+    }
+}

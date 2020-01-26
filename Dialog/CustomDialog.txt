@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:gravity="center">
+
+
+    <Button
+        android:id="@+id/buttonClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Click To Show Custom Dialog" />
+
+
+</LinearLayout>
+
+--------------------------------------------------------------------------------
+
+package com.example.mytimepass;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Dialog;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity {
+
+    private Button buttonClick;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        buttonClick = (Button) findViewById(R.id.buttonClick);
+
+        // add listener to button
+        buttonClick.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                // Create custom dialog object
+                final Dialog dialog = new Dialog(MainActivity.this);
+                // Include dialog.xml file
+                dialog.setContentView(R.layout.customdialog);
+                // Set dialog title
+                dialog.setTitle("Custom Dialog");
+
+                // set values for custom dialog components - text, image and button
+                TextView text = (TextView) dialog.findViewById(R.id.textDialog);
+                text.setText("Custom dialog Android example.");
+                ImageView image = (ImageView) dialog.findViewById(R.id.imageDialog);
+                image.setImageResource(R.drawable.ic_sms_black_24dp);
+
+                dialog.show();
+
+                Button declineButton = (Button) dialog.findViewById(R.id.declineButton);
+                // if decline button is clicked, close the custom dialog
+                declineButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Close dialog
+                        dialog.dismiss();
+                    }
+                });
+
+
+            }
+
+        });
+    }
+}
+
+
+------------------------------------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <ImageView
+        android:id="@+id/imageDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="6dp" />
+
+    <TextView
+        android:id="@+id/textDialog"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FFF"
+        android:layout_toRightOf="@+id/imageDialog"/>
+
+    <Button
+        android:id="@+id/declineButton"
+        android:layout_width="100px"
+        android:layout_height="wrap_content"
+        android:text=" Submit "
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_below="@+id/textDialog"
+        android:layout_toRightOf="@+id/imageDialog"
+        />
+
+</RelativeLayout>

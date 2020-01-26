@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Clothes"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#000000"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:text="CLOTHING SECTION!!"
+                android:textColor="#D8D3D3"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <ViewFlipper
+                android:layout_width="match_parent"
+                android:layout_height="299dp"
+                android:id="@+id/flipper"
+                android:layout_marginTop="3dp"
+                >
+
+            </ViewFlipper>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="serif"
+                    android:text="Our store Rating:"
+                    android:textColor="#D8D3D3"
+                    android:textSize="30dp"
+                    android:textStyle="bold" />
+
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="3"
+                    android:rating="2.5" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#000000"
+                android:fontFamily="serif"
+                android:textColor="#D8D3D3"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                tools:text=""/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ADD ITEMS TO CART"
+                android:id="@+id/addcartbutton"
+                android:background="#D8D3D3"
+                android:textColor="#010A0A"
+                android:textStyle="bold"
+                android:fontFamily="serif"/>
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/tshirt1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:src="@drawable/tshirt1" />
+
+
+        <ImageButton
+            android:id="@+id/locket1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:src="@drawable/locket1" />
+
+
+        <ImageButton
+            android:id="@+id/jeans1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:src="@drawable/jeans1" />
+
+        <ImageButton
+            android:id="@+id/shoes1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:src="@drawable/shoes1" />
+
+
+        <ImageButton
+            android:id="@+id/bracelet1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:src="@drawable/bracelet1" />
+
+        <ImageButton
+            android:id="@+id/glasses1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:src="@drawable/glasses1" />
+
+
+    </LinearLayout>
+
+</ScrollView>

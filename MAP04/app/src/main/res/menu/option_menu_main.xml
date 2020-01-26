@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/share"
+        android:icon="@drawable/ic_share"
+        android:title="Share"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/aboutus"
+        android:icon="@drawable/ic_about"
+        android:title="About Us"
+        app:showAsAction="ifRoom"/>
+
+    <item android:title="Options.."
+        app:showAsAction="always"
+        android:icon="@drawable/dots">
+
+        <menu>
+            <item
+                android:id="@+id/cart"
+                android:title="Cart"
+                android:icon="@drawable/shoppingcart"
+                app:showAsAction="never" />
+            <item android:id="@+id/logout"
+                android:title="Log out"
+                android:icon="@drawable/logout"
+                app:showAsAction="never"/>
+        </menu>
+
+    </item>
+
+</menu>

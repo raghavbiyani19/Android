@@ -1,0 +1,62 @@
+package com.example.bookscontentprovider;
+
+
+import android.app.Activity;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+import androidx.loader.content.CursorLoader;
+
+public class MainActivity extends Activity {
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button btnAdd = (Button) findViewById(R.id.btnAdd);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                ContentValues values = new ContentValues();
+                values.put("title", ((EditText) findViewById(R.id.txtTitle)).getText().toString());
+                values.put("isbn", ((EditText) findViewById(R.id.txtISBN)).getText().toString());
+                Uri uri = getContentResolver().insert(
+                        Uri.parse("content://com.example.bookscontentprovider/books"),
+                        values);
+                Toast.makeText(getBaseContext(),uri.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button btnRetrieve = (Button) findViewById(R.id.btnRetrieve);
+        btnRetrieve.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //---retrieve the titles---
+                Uri allTitles = Uri.parse(
+                        "content://com.example.bookscontentprovider/books");
+
+                CursorLoader cursorLoader=new CursorLoader(MainActivity.this,allTitles,null,null,null,null);
+                Cursor c=cursorLoader.loadInBackground();
+                Toast.makeText(MainActivity.this,String.valueOf(c.getCount()),Toast.LENGTH_SHORT).show();
+                if (c.moveToFirst()) {
+                    do{
+                        Log.v("ContentProviders",
+                                c.getString(c.getColumnIndex(
+                                        BooksProvider._ID)) + ", " +
+                                        c.getString(c.getColumnIndex(
+                                                BooksProvider.TITLE)) + ", " +
+                                        c.getString(c.getColumnIndex(
+                                                BooksProvider.ISBN)));
+                    } while (c.moveToNext());
+                }
+            }
+        });
+
+    }
+}

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/greyblur"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:layout_width="130dp"
+        android:layout_height="120dp"
+        android:id="@+id/panel"
+        android:src="@drawable/clipart2"
+        android:layout_marginBottom="25dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:text="Welcome to TEAM selection Panel!!"
+        android:textAlignment="center"
+        android:textColor="#070202"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"/>
+
+
+    <TextView
+        android:id="@+id/playersLeft"
+        android:textColor="#070202"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:fontFamily="serif"
+        android:layout_marginBottom="5dp"/>
+
+    <ListView
+        android:id="@+id/teamsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#202222"
+        android:paddingBottom="8dp"
+        android:textStyle="bold"
+        android:divider="#E4DFDF"
+        android:dividerHeight="2dp">
+
+    </ListView>
+
+    <Button
+        android:background="@drawable/ball1"
+        android:layout_marginTop="12dp"
+        android:paddingTop="10dp"
+        android:id="@+id/show"
+        android:layout_width="90dp"
+        android:layout_height="70dp"
+        android:gravity="center"/>
+
+</LinearLayout>
